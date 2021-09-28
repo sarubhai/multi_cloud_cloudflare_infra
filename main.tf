@@ -55,6 +55,7 @@ resource "cloudflare_zone_settings_override" "site_settings" {
 
 # DNS Records
 resource "cloudflare_record" "aws_web" {
+  count   = var.aws_web ? 1 : 0
   zone_id = lookup(data.cloudflare_zones.site.zones[0], "id")
   name    = "@"
   value   = data.terraform_remote_state.aws.outputs.web_public_ip_address
@@ -64,6 +65,7 @@ resource "cloudflare_record" "aws_web" {
 }
 
 resource "cloudflare_record" "azure_web" {
+  count   = var.azure_web ? 1 : 0
   zone_id = lookup(data.cloudflare_zones.site.zones[0], "id")
   name    = "@"
   value   = data.terraform_remote_state.azure.outputs.web_public_ip_address
@@ -73,6 +75,7 @@ resource "cloudflare_record" "azure_web" {
 }
 
 resource "cloudflare_record" "do_web" {
+  count   = var.do_web ? 1 : 0
   zone_id = lookup(data.cloudflare_zones.site.zones[0], "id")
   name    = "@"
   value   = data.terraform_remote_state.do.outputs.web_public_ip_address
@@ -82,6 +85,7 @@ resource "cloudflare_record" "do_web" {
 }
 
 resource "cloudflare_record" "gcp_web" {
+  count   = var.gcp_web ? 1 : 0
   zone_id = lookup(data.cloudflare_zones.site.zones[0], "id")
   name    = "@"
   value   = data.terraform_remote_state.gcp.outputs.web_public_ip_address
